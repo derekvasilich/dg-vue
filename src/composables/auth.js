@@ -18,7 +18,7 @@ export const useAuth = () => {
                 }
             })
             .catch((e) => {
-                error.value = { status: e.response.status, message: e.message }
+                error.value = { status: e.response?.status || e.code, message: e.message }
             })
     }
 
@@ -26,7 +26,11 @@ export const useAuth = () => {
         sessionStorage.removeItem(session.JWT_TOKEN)
         sessionStorage.removeItem(session.JWT_TYPE)
         sessionStorage.clear()
-        router.push({ name: 'signIn' })
+        if (typeof NativeWebInterface !== 'undefined') {
+            NativeWebInterface.logout()
+        } else {
+            router.push({ name: 'signIn' })
+        }
     }
 
     return {

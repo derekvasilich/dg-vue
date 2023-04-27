@@ -1,20 +1,28 @@
 <script setup>
 import { defineProps, toRefs, computed, ref, onMounted } from 'vue'
-import { kebabCase, isArray } from 'lodash'
+import { kebabCase, isArray, isEmpty } from 'lodash'
 import { Tooltip } from 'bootstrap'
+import { useVehicles } from '@/composables/vehicles';
 
 const props = defineProps({
     description: Object
 })
 
-const { factoryOption, exteriorColor } = toRefs(props.description)
+const { factoryOption, exteriorColor, interiorColor, genericColor } = toRefs(props.description)
+const { selectedOptions } = useVehicles()
+
+const allColors = computed(() => {
+    return [].concat(exteriorColor && exteriorColor.value || [])
+        .concat(interiorColor && interiorColor.value || [])
+        .concat(genericColor && genericColor.value || [])
+})
 
 const factoryOptionsGrouped = computed(() => {
-    if (!factoryOption.value) {
+    if (!factoryOption || !isArray(factoryOption.value)) {
         return []
     }
     return factoryOption.value.reduce((accum, opt) => {
-        let group = opt.header._
+        let group = opt.header?._
         if (!accum.has(group)) {
             accum.set(group, [])
         }
@@ -23,11 +31,10 @@ const factoryOptionsGrouped = computed(() => {
     }, new Map())
 })
 const firstGroup = computed(() => factoryOptionsGrouped.value.keys().next().value)
-const selectedOptions = ref({})
 const optionTabContent = ref(null)
 
 const colorSwatchStyle = (chromeCode) => {
-    const color = [...exteriorColor.value].find(color => color.colorCode === chromeCode)
+    const color = allColors.value.find(color => color.colorCode === chromeCode)
     if (color && color.rgbValue) {
         return {
             'background-color': `#${color.rgbValue}`,
@@ -72,14 +79,21 @@ onMounted(() => {
                     :key="idx"
                     class="list-group col-6">
                     <li class="list-group-item d-flex">
-                        <input class="form-check-input me-1" type="checkbox" v-model="selectedOptions[item.chromeCode]" :id="`checkbox-${index}-${idx}`">
+                        <input class="form-check-input me-1"
+                            :type="item.optionKindId ? 'radio' : 'checkbox'" 
+                            v-model="selectedOptions[item.chromeCode]"
+                            :value="true"
+                            :name="item.optionKindId"
+                            :id="`checkbox-${index}-${idx}`">
                         <label class="form-check-label flex-fill" :for="`checkbox-${index}-${idx}`">
                             <span v-if="isArray(item.description)" 
                                 data-bs-toggle="tooltip"
                                 :title="item.description[1]">{{ item.description[0] }}
                                 <i class="bi bi-info-circle"></i>
                             </span>
-                            <div class="p-2 rounded-2 w-100" :style="colorSwatchStyle(item.chromeCode)" v-else>{{ item.description }}</div>
+                            <div v-else-if="!isEmpty(colorSwatchStyle(item.chromeCode))" class="p-2 rounded-2 w-100" 
+                                :style="colorSwatchStyle(item.chromeCode)">{{ item.description }}</div>
+                            <span v-else>{{  item.description }}</span>
                         </label>
                     </li>
                 </ul>

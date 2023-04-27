@@ -5,6 +5,7 @@ import { useException } from '@/composables/exceptions'
 const currentVehicle = ref({})
 
 const vehicles = ref([])
+const selectedOptions = ref({})
 
 const { setException } = useException()
 
@@ -112,6 +113,7 @@ export const useVehicles = () => {
         vehicleService.getAll({ page: page.value, size: size.value })
             .then((res) => {
                 vehicles.value = res.data.data.allVehiclesPaginated.edges
+//                selectedOptions.value = []
             })
             .catch((e) => setException(e))
             .finally(() => {
@@ -150,6 +152,7 @@ export const useVehicles = () => {
         nextVehicle,
         previousVehicle,
         hasNextVehicle,
-        hasPreviousVehicle
+        hasPreviousVehicle,
+        selectedOptions
     }
 }

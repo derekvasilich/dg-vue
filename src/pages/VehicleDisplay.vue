@@ -2,6 +2,7 @@
 import { defineProps, onMounted } from 'vue';
 import { useVehicles } from '@/composables/vehicles';
 import VehicleDetails from '@/components/VehicleDetails.vue';
+import Financial from '@/components/description/Financial.vue';
 import { formatCurrency, formatVIN } from '@/utils'
 import VehicleCarousel from '@/components/VehicleCarousel.vue';
 
@@ -31,7 +32,8 @@ onMounted(() => getVehicleById(props.vehicleId) )
                         </a>
                     </li>
                     <li class="nav-item flex-fill">
-                        <h4 class="my-0 fw-normal">{{ currentVehicle.name || currentVehicle.vin }}</h4>
+                        <h4 class="my-0 fw-normal text-center">{{ currentVehicle.name || currentVehicle.vin }}</h4>
+                        <small>{{ formatVIN(currentVehicle.vin) }}</small>
                     </li>
                     <li class="nav-item" :class="!hasNextVehicle && 'disabled'" style="max-width: 200px;">
                         <a @click="nextVehicle()" 
@@ -44,28 +46,12 @@ onMounted(() => getVehicleById(props.vehicleId) )
                 </ul>
             </div>
             <div class="card-body">
-            <h1 class="card-title pricing-card-title">{{ formatCurrency(currentVehicle.price) }}</h1>
-                <VehicleCarousel :current-vehicle="currentVehicle" />
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <td>ID</td>
-                            <td>{{ currentVehicle.id }}</td>
-                        </tr>
-                        <tr>
-                            <td>VIN</td>
-                            <td>{{ formatVIN(currentVehicle.vin) }}</td>
-                        </tr>
-                        <tr>
-                            <td>Name</td>
-                            <td>{{ currentVehicle.name }}</td>
-                        </tr>
-                        <tr>
-                            <td>Price</td>
-                            <td>{{ formatCurrency(currentVehicle.price) }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="row">
+                    <VehicleCarousel class="col-md-8" :current-vehicle="currentVehicle" />
+                    <Financial class="col-md-4" v-if="currentVehicle?.description?.description"
+                        :vehicle="currentVehicle" 
+                        :description="currentVehicle?.description?.description" />
+                </div>
                 <VehicleDetails v-if="currentVehicle?.description?.description" 
                     :vehicle="currentVehicle"
                     :description="currentVehicle.description.description"

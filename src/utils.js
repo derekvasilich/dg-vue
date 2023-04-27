@@ -14,3 +14,10 @@ export function formatCurrency(value) {
 export function formatVIN(value) {
     return value?.toUpperCase()
 }
+
+export function formatPriceRange(range) {
+    if (range.low === range.high) {
+        return formatCurrency(range.low)
+    }
+    return formatCurrency(range.low) + ' - ' + formatCurrency(range.high)
+}

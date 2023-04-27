@@ -1,16 +1,14 @@
 <script setup>
 import { defineProps, toRefs, computed } from 'vue'
-import { isArray } from 'lodash'
-import { existsTypeAnnotation } from '@babel/types';
 
 const props = defineProps({
     description: Object
 })
 
-const { genericEquipment } = toRefs(props.description)
+const { standard } = toRefs(props.description)
 
-const genericEquipmentGrouped = computed(() => {
-    return [].concat(genericEquipment && genericEquipment.value || []).reduce((accum, equip) => {
+const allEquipmentGrouped = computed(() => {
+    return [].concat(standard && standard.value || []).reduce((accum, equip) => {
         let group = equip.definition?.group._ || equip.header?._
         if (!accum.has(group)) {
             accum.set(group, [])
@@ -19,12 +17,12 @@ const genericEquipmentGrouped = computed(() => {
         return accum
     }, new Map())
 })
-const firstGroup = computed(() => genericEquipmentGrouped.value.keys().next().value)
+const firstGroup = computed(() => allEquipmentGrouped.value.keys().next().value)
 </script>
 
 <template>
     <ul class="nav nav-tabs">
-        <li v-for="([index]) in genericEquipmentGrouped" :key="index" class="nav-item">
+        <li v-for="([index]) in allEquipmentGrouped" :key="index" class="nav-item">
             <a class="nav-link" :class="index === firstGroup && 'active'" 
                 @click.prevent
                 data-bs-toggle="tab" 
@@ -35,7 +33,7 @@ const firstGroup = computed(() => genericEquipmentGrouped.value.keys().next().va
         </li>
     </ul>
     <div class="tab-content">
-        <div v-for="([index, equip]) in genericEquipmentGrouped" 
+        <div v-for="([index, equip]) in allEquipmentGrouped" 
             :key="index" 
             class="tab-pane fade row" 
             :class="index === firstGroup && 'show active'" 

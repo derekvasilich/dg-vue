@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps, toRefs, computed } from 'vue'
-import { kebabCase, isArray } from 'lodash'
+import { kebabCase, isEmpty, isArray } from 'lodash'
 
 const props = defineProps({
     description: Object
@@ -9,7 +9,7 @@ const props = defineProps({
 const { consumerInformation } = toRefs(props.description)
 
 const consumerInformationArr = computed(() => {
-    if (!consumerInformation.value) {
+    if (isEmpty(consumerInformation.value)) {
         return []
     }
     return isArray(consumerInformation.value) ? consumerInformation.value : [consumerInformation.value]
