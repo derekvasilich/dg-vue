@@ -3,7 +3,10 @@ import { computed } from "vue";
 import { isEmpty } from "lodash";
 
 const props = defineProps({
-  currentVehicle: Object,
+  currentVehicle: {
+    type: Object,
+    default: () => {},
+  },
 });
 
 const images = computed(() => {

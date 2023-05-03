@@ -2,7 +2,10 @@
 import { defineProps, toRefs, computed } from "vue";
 
 const props = defineProps({
-  description: Object,
+  description: {
+    type: Object,
+    default: () => {},
+  },
 });
 
 const { standard } = toRefs(props.description);

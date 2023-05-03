@@ -5,8 +5,14 @@ import { useVehicles } from "@/composables/vehicles";
 import { isEmpty } from "lodash";
 
 const props = defineProps({
-  description: Object,
-  vehicle: Object,
+  description: {
+    type: Object,
+    default: () => {},
+  },
+  vehicle: {
+    type: Object,
+    default: () => {},
+  },
 });
 const { description, vehicle } = toRefs(props);
 const { basePrice, factoryOption } = toRefs(description.value);

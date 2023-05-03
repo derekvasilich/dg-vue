@@ -3,7 +3,10 @@ import { defineProps, defineEmits, toRefs, computed } from "vue";
 
 const props = defineProps({
   disabled: Boolean,
-  currentPage: Number,
+  currentPage: {
+    type: Number,
+    default: 1,
+  },
 });
 
 const emits = defineEmits(["previous", "next", "page"]);

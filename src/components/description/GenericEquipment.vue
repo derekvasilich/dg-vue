@@ -4,7 +4,10 @@ import { isArray } from "lodash";
 import { existsTypeAnnotation } from "@babel/types";
 
 const props = defineProps({
-  description: Object,
+  description: {
+    type: Object,
+    default: () => {},
+  },
 });
 
 const { genericEquipment } = toRefs(props.description);

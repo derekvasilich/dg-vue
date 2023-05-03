@@ -4,7 +4,10 @@ import { formatCurrency, formatVIN } from "@/utils";
 import { toRefs, defineProps } from "vue";
 
 const props = defineProps({
-  vehicle: Object,
+  vehicle: {
+    type: Object,
+    default: () => {},
+  },
 });
 
 const { vehicle } = toRefs(props);

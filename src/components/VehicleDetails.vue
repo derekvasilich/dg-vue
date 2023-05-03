@@ -10,8 +10,14 @@ import Standard from "./description/Standard.vue";
 import TechnicalSpecs from "./description/TechnicalSpecs.vue";
 
 const props = defineProps({
-  description: Object,
-  vehicle: Object,
+  description: {
+    type: Object,
+    default: () => {},
+  },
+  vehicle: {
+    type: Object,
+    default: () => {},
+  },
 });
 
 const { description } = toRefs(props);

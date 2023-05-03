@@ -5,7 +5,10 @@ import { Tooltip } from "bootstrap";
 import { useVehicles } from "@/composables/vehicles";
 
 const props = defineProps({
-  description: Object,
+  description: {
+    type: Object,
+    default: () => {},
+  },
 });
 
 const { factoryOption, exteriorColor, interiorColor, genericColor } = toRefs(

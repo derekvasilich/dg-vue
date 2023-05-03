@@ -7,7 +7,10 @@ import { formatCurrency, formatVIN } from "@/utils";
 import VehicleCarousel from "@/components/VehicleCarousel.vue";
 
 const props = defineProps({
-  vehicleId: String,
+  vehicleId: {
+    type: String,
+    default: null,
+  },
 });
 
 const {

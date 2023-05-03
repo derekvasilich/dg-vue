@@ -2,7 +2,10 @@
 import { defineProps, toRefs } from "vue";
 
 const props = defineProps({
-  images: Array,
+  images: {
+    type: Array,
+    default: () => [],
+  },
   showControls: Boolean,
   showIndicators: Boolean,
 });

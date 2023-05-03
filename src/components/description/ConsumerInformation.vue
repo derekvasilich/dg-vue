@@ -3,7 +3,10 @@ import { defineProps, toRefs, computed } from "vue";
 import { kebabCase, isEmpty, isArray } from "lodash";
 
 const props = defineProps({
-  description: Object,
+  description: {
+    type: Object,
+    default: () => {},
+  },
 });
 
 const { consumerInformation } = toRefs(props.description);

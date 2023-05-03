@@ -3,7 +3,10 @@ import { defineProps, toRefs, computed } from "vue";
 import { isEmpty } from "lodash";
 
 const props = defineProps({
-  description: Object,
+  description: {
+    type: Object,
+    default: () => {},
+  },
 });
 
 const { engine } = toRefs(props.description);
