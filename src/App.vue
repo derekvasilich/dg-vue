@@ -8,14 +8,14 @@
 </template>
 
 <script>
-import AppHeader from '@/components/global/AppHeader.vue';
+import AppHeader from "@/components/global/AppHeader.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    AppHeader
-  }
-}
+    AppHeader,
+  },
+};
 </script>
 
 <style>

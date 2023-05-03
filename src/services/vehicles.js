@@ -16,7 +16,7 @@ const queryAllVehicles = `query allVehiclesPaginated($page: Int, $size: Int) {
             hasNextPage
         }
     }
-}`
+}`;
 
 const queryGetVehicle = `query getVehicle ($vehicleId: Int) { 
     getVehicleById (id: $vehicleId) {
@@ -40,39 +40,47 @@ const queryGetVehicle = `query getVehicle ($vehicleId: Int) {
             description
         }
     }
-}`
+}`;
 
 class VehicleDataService {
   getAll({ page, size }) {
-    return http.post("/graphql", { query: queryAllVehicles, variables: { page, size } }, {
-        headers: getHeaders()
-    });
+    return http.post(
+      "/graphql",
+      { query: queryAllVehicles, variables: { page, size } },
+      {
+        headers: getHeaders(),
+      }
+    );
   }
 
   get(vehicleId) {
-    return http.post(`/graphql`, { query: queryGetVehicle, variables: { vehicleId } }, {
-        headers: getHeaders()
-    });
+    return http.post(
+      `/graphql`,
+      { query: queryGetVehicle, variables: { vehicleId } },
+      {
+        headers: getHeaders(),
+      }
+    );
   }
 
   create(data) {
     return http.post("/vehicles", data, {
-        headers: getHeaders()
+      headers: getHeaders(),
     });
   }
 
   update(id, data) {
     return http.put(`/vehicles/${id}`, data, {
-        headers: getHeaders()
+      headers: getHeaders(),
     });
   }
 
   delete(id) {
     return http.delete(`/vehicles/${id}`, {
-        headers: getHeaders()
+      headers: getHeaders(),
     });
   }
 }
 
 const vehicleDataServiceInstance = new VehicleDataService();
-export default  vehicleDataServiceInstance
+export default vehicleDataServiceInstance;

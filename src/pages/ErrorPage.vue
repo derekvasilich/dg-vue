@@ -1,16 +1,16 @@
 <script setup>
-import { useException } from '@/composables/exceptions'
+import { useException } from "@/composables/exceptions";
 
-const { error } = useException()
+const { error } = useException();
 </script>
 
 <template>
-    <div v-if="error">
-        <div className="alert alert-danger" role="alert">
-            {{ error.response?.status || error.code }}: {{ error.message }}
-            <small>
-                {{ error.toString() }}
-            </small>
-        </div>  
+  <div v-if="error">
+    <div className="alert alert-danger" role="alert">
+      {{ error.response?.status || error.code }}: {{ error.message }}
+      <small>
+        {{ error.toString() }}
+      </small>
     </div>
+  </div>
 </template>
