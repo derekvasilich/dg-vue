@@ -1,5 +1,7 @@
 # dg-vue
 
+A Vue3 front-end for the dg-spring-boot REST / GraphQL Api project.
+
 ## Project setup
 ```
 npm install
