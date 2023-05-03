@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "prod": "vue-cli-service serve --mode production",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e": "vue-cli-service test:e2e --headless",
+    "test:cy": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -34,6 +35,7 @@
     "@vue/test-utils": "^2.0.0-0",
     "babel-eslint": "^10.1.0",
     "chai": "^4.1.2",
+    "cypress": "^12.11.0",
     "eslint": "^7.5.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
